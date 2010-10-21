@@ -1,0 +1,3 @@
+first_hist = dohist('maze.jpg',1)
+
+new_pic = first_pic > findthresh(first_hist,4,1)
