@@ -1,29 +1,48 @@
-first_hist = dohist('maze.jpg',0);
-nomaze_pic = myjpgload('nomaze.jpg',0);
-maze_pic = myjpgload('maze.jpg',0);
-thresh = findthresh(first_hist,4,0);
-mazet_pic = maze_pic > thresh;
-nomazet_pic = nomaze_pic > thresh;
-diff_pic = ~(mazet_pic | nomazet_pic) + mazet_pic;
+diff_pic = removeBackground( 'maze.jpg', 'nomaze.jpg');
+
+imwrite(diff_pic, 'diff.jpg','jpg');
 
 [height, width] = size(diff_pic);
 
-window_size = 5;
-black_a_width = width / window_size;
-black_a_height = height / window_size;
-black_area = zeros(black_a_height, black_a_width);
+% find compact areas
+[labeled, labels_no] = bwlabel(diff_pic * (-1) + 1, 4);
+compactness = findAreasCompactness(labeled, labels_no);
+circles = getCircles(labeled, compactness, 10);
+[corners, notcorners] = takeFourCorners(circles);
 
-for i = (1:black_a_width - 1) * window_size + 3
-    for j = (1:black_a_height -1) * window_size + 3
+projected_pic = remap('diff.jpg', 'jpg', corners);
 
-      
-         tiny = diff_pic(i - (window_size - 1)/2: i + (window_size - 1)/2, ... 
-            j - (window_size - 1)/2: j + (window_size - 1)/2); 
-            
-         black_pics = window_size ^ 2 - sum(sum(tiny));
-         black_area(i / window_size, j / window_size) = ...
-         %   (black_pics >  0.8 * window_size ^ 2);
+
+
+new_corners = [corners(:,2),corners(:, 1)];
+
+min = 10000;
+min_index = -1;
+for i = 1:4
+   
+    dist = distance(new_corners(i,:), notcorners(1,:));
+    
+    if dist < min
+        min = dist;
+        min_index = i;
     end
-
 end
+
+%new_conrners(min_index, 1)
+
+obs_pic = removeBackground( 'mazewR.jpg', 'maze.jpg');
+imwrite(obs_pic, 'obs.jpg','jpg');
+projwobs_pic = remap('obs.jpg', 'jpg', corners);
+imwrite( projwobs_pic, 'temp.jpg', 'jpg');
+projwobs_pic = myjpgload( 'temp.jpg', 0);
+projwobs_pic = getlargest(projwobs_pic,0);
+
+%imshow(projwobs_pic);
+
+%[labeled, labels_no] = bwlabel(-projwobs_pic + 1, 4);
+%areas = regionprops(labeled, 'Area');
+%[areas, order] = sort([areas(:).Area], 'descend');
+
+    
+
 
