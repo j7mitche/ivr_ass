@@ -1,2 +1,0 @@
-first_hist = dohist('1.jpg',1)
-new_pic = first_pic > findthresh(first_hist,4,1)
