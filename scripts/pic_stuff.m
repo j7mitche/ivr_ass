@@ -45,7 +45,7 @@ end
 % choose those areas which are resemble circle
 CIRCLE_TRESHOLD = 0.2;
 circles_labels = find(abs(compactness - 1) < CIRCLE_TRESHOLD);
-%imwrite(ismember(labeled, circles_labels), '1.jpg')
+imwrite(ismember(labeled, circles_labels), '1.jpg')
 [h,w] = size(circles_labels);
 centroids = regionprops(labeled, 'Centroid');
 
@@ -56,3 +56,9 @@ for i=(1:h)
 end
 circles_convhull = convhull(X(:,1), X(:,2));
 
+corners = zeros(4,2);
+for i = (1 : 4)
+    point = centroids(circles_labels(circles_convhull(i))).Centroid;
+    corners(i, 1) = point(1);
+    corners(i, 2) = point(2);
+end
