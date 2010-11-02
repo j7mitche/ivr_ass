@@ -1,8 +1,7 @@
-function compactness = getcompactness(Image)
+function compactness = getcompactness(regionprop)
 
-     [H,W] = size(Image);
-     area = bwarea(Image);
-     perim = bwarea(bwperim(Image,4));
+     area = regionprop.Area;
+     perim = regionprop.Perimeter;
      
      % compactness
      compactness = perim*perim/(4*pi*area);
