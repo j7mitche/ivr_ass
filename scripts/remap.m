@@ -4,7 +4,7 @@ function newimage = remap(name, ext, M)
 
 UV=zeros(4,2);
 XY=zeros(4,2);
-UV=[[1,1]',[1,180]',[250,180]',[250,1]']';    % target points
+UV=[[1,1]',[1,180]',[270,180]',[270,1]']';    % target points
 XY=M;    % source points
 
 P=esthomog(UV,XY,4);    % estimate homography mapping UV to XY
@@ -13,12 +13,12 @@ P=esthomog(UV,XY,4);    % estimate homography mapping UV to XY
 inimage=imread(name, ext);
 [IR,IC,D]=size(inimage);
 
-outimage=zeros(250,180,3);   % destination image
+outimage=zeros(270,180,3);   % destination image
 v=zeros(3,1);
 
 % loop over all pixels in the destination image, finding
 % corresponding pixel in source image
-for r = 1 : 250
+for r = 1 : 270
 for c = 1 : 180
   v=P*[r,c,1]';        % project destination pixel into source
   y=round(v(1)/v(3));  % undo projective scaling and round to nearest integer
