@@ -4,36 +4,31 @@ function [] = driveRobot(robot, nomaze, maze, obstacles)
     corners = pic_stuff(nomaze, maze, obstacles);
 
 
-    robot_point = findBigSpots(obstacles, maze, corners, 1)
-    
-    obs1 = findBigSpots(obstacles, maze, corners, 2);
-    obs2 = findBigSpots(obstacles, maze, corners, 3);
-    
+    [robot_point, obs1, obs2] = findBigSpots(obstacles, maze, corners, 1)
+        
     %turn right if turn = -1 and turn left if turn = 1
-    [turn, paths] = determinePath(robot_point, obs1, obs2);
+    [turn, paths] = determinePath(robot_point, obs1, obs2)
 
-    paths = 2;
     if ( paths == 1 )
-        targets = [30 90; 145 90];
+        targets = [30 70; 145 70];
     elseif (paths == 2 )
-        targets = [30 160; 145 160];
+        targets = [30 150; 145 150];
     else
-        targets = [30 225; 145 225];
+        targets = [30 220; 145 220];
     end
 
     if (turn == 1)
-        targets = [targets; [145 50]];
+        targets = [targets; [150 45]];
     else
         
-        targets = [targets(2,:); targets(1,:); [25 50]];
+        targets = [targets(2,:); targets(1,:); [30 45]];
     end    
     %targets
     
     %robot_point = [25 50];
-    path(robot, targets, robot_point, maze, obstacles, corners);
+    path(robot, targets, robot_point, maze, obstacles, corners, [obs1; obs2]);
 
     
     
     
-    fclose(s); 
 end

@@ -1,0 +1,30 @@
+things to do:
+
+work on algorithm for robot
+
+report:
+introduction:
+
+methods:
+    background removal, tresholding 
+    detecting obstacles and dots, compactness and size
+    projection
+   
+    visual servoing, trajectory correction
+    subgoals
+
+    code structure, some implementation details
+
+
+make evaluation
+    1: maze with overlayed trajectory of a robot
+    +2: show how good we are at detecting corners of the maze
+    +3: ---- || ---- regions where obstacles are placed and location of a robot
+
+    4: statistics with number of failures, how far away from final target we've stopped
+
+    +5: accuracy of choosing a correct path
+    +6: observed trajectory correcting 
+
+    
+

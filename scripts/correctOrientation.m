@@ -1,6 +1,7 @@
 function newArray = correctOrientation(corners, notcorners)
 
-if ( notcorners(1,2) - notcorners(2,2) < 5)
+
+if ( abs(notcorners(1,2) - notcorners(2,2)) < 5)
     if ( notcorners(1,2) < notcorners(2,2) )
         top = 1;
     else

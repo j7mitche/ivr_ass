@@ -11,8 +11,9 @@
 % use double(myjpgload(..,..) to get a double type image 
 % returned.
 
-function newimage = myjpgload(name,show)
-  loaded = importdata(name,'jpg');
+function newimage = myjpgload(name, show)
+  %loaded = importdata(name,format);
+  loaded = importdata(name);
   newimage = myrgb2gray(loaded);
   if show > 0
       figure(show)

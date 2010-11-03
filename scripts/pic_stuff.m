@@ -17,6 +17,8 @@ function [corners] = pic_stuff(nomaze, maze, obstacles)
     corners = correctOrientation( corners, notcorners );
 
     projected_pic = remap('diff.jpg', 'jpg', corners);
+    
+    imwrite( projected_pic, 'proj.jpg', 'jpg');
     %imshow(projected_pic);
 
 %     new_corners = [corners(:,2),corners(:, 1)];
