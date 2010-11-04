@@ -18,16 +18,17 @@ regions = regionprops(labeled, 'Area', 'Centroid', 'Perimeter');
 
 bigSpots = regions(order(1:3));
 
-OBSTACLE_EPSILON = 20;
+%OBSTACLE_EPSILON = 40;
+area_dist = zeros(3,1);
 for i = (1:3)
     x = bigSpots(i).Centroid;
-    dist = min(distance(x, obstacles_vector(1,:)), distance(x, obstacles_vector(2,:)));
-    if (dist > OBSTACLE_EPSILON)
-        robot_point = x;
-        break;
-    end
+    area_dist(i) = min(distance(x, obstacles_vector(1,:)), distance(x, obstacles_vector(2,:)));
+%     if (dist > OBSTACLE_EPSILON)
+%         robot_point = x;
+%         break;
+%    end
 end
-
+robot_point = bigSpots(find(area_dist == max(area_dist))).Centroid;
 
 
 end

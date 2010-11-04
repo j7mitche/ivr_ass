@@ -17,23 +17,27 @@ regions = regionprops(labeled, 'Area', 'Centroid', 'Perimeter');
 
 
 bigSpots = regions(order(1:3));
+% 
+% c1 = getcompactness(bigSpots(1));
+% c2 = getcompactness(bigSpots(2));
+% c3 = getcompactness(bigSpots(3));
+% compactness = [c1, c2, c3];
+% for i= 1:3
+%     compactness(i) = abs(1 - compactness(i));
+% end
+% 
+% 
+% robot_index = find(compactness == min(compactness));
 
-c1 = getcompactness(bigSpots(1));
-c2 = getcompactness(bigSpots(2));
-c3 = getcompactness(bigSpots(3));
-compactness = [c1, c2, c3];
-for i= 1:3
-    compactness(i) = abs(1 - compactness(i));
-end
+centroids = [bigSpots(1).Centroid; bigSpots(2).Centroid; bigSpots(3).Centroid];
+robot_index = find(centroids(:,2) == min(centroids(:,2)));
 
-
-robot_index = find(compactness == min(compactness));
-
-robot_point = bigSpots(robot_index).Centroid;
+robot_point = bigSpots(robot_index).Centroid
 
 obstacles = setdiff(1:3, [robot_index]);
-obs1 = bigSpots(obstacles(1)).Centroid;
-obs2 = bigSpots(obstacles(2)).Centroid;
+obs1 = bigSpots(obstacles(1)).Centroid
+obs2 = bigSpots(obstacles(2)).Centroid
 
+a=3
 
 end

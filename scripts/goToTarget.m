@@ -1,6 +1,7 @@
 function lastPos = goToTarget(robot, target, maze, obstacles, corners, lastPos, obstacles_vector)
 
 EPSILON = 5;
+DISTANCE_OBSOLETE = 70;
 global MODE;
 
 robot_point = findRobot(obstacles, maze, corners, obstacles_vector);
@@ -20,7 +21,8 @@ len = sqrt(sum(a.^2))*sqrt(sum(b.^2));
 %len
 %dot2=dot(a,b)
 movement_dist = sqrt(sum(a.^2));
-if (len ~= 0 && movement_dist > EPSILON)
+if (len ~= 0 && movement_dist > EPSILON && ...
+        distance(lastPos, robot_point) < DISTANCE_OBSOLETE)
     angle = 180 - acosd( dot(a,b)/ (sqrt(sum(a.^2))*sqrt(sum(b.^2))))
 
     c = [lastPos(1), lastPos(2),1;robot_point(1),robot_point(2),1; ...
@@ -35,15 +37,16 @@ lastPos = robot_point;
 %send_command('D,15,15');
 if (MODE == 1)
     set_speeds(15, 15);
+    
+    % if distance is really short, then only moves that distance
+    pause(min(4, sqrt(sum(b.^2))/18 )); 
 else
     set_speeds(3, 3);
+    
+    % if distance is really short, then only moves that distance
+    pause(min(1.5, sqrt(sum(b.^2))/18 )); 
 end
 
-% if distance is really short, then only moves that distance
-pause(min(4, sqrt(sum(b.^2))/18 )); 
-%pause(max(0, sqrt(sum(b.^2))/18 )); 
-%fprintf(robot,'D,0,0');
-%send_command('D,0,0');
 set_speeds(0, 0);
 
 end

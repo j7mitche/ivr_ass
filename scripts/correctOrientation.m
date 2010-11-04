@@ -3,14 +3,14 @@ function newArray = correctOrientation(corners, notcorners)
 
 if ( abs(notcorners(1,2) - notcorners(2,2)) < 5)
     if ( notcorners(1,2) < notcorners(2,2) )
-        top = 1;
+        top = 1
     else
-        top = 2;
+        top = 2
     end
-elseif( notcorners(1,1) > notcorners(2,1) )
-    top = 4;
+elseif( notcorners(1,2) > notcorners(2,2) )
+    top = 4
 else
-    top = 5;
+    top = 5
 end
 
 new_corners = [corners(:,2),corners(:, 1)];

@@ -3,8 +3,10 @@ function circlecenters = getCircles(labeled, labels_no)
 % looking for 6 dots in the pictuer
 
 % choose those areas which are resemble circle
-CIRCLE_MAX_COMPACTNESS = 2.0;
-CIRCLE_MIN_COMPACTNESS = 0.6;
+CIRCLE_MAX_COMPACTNESS = 1.3;
+CIRCLE_MIN_COMPACTNESS = 0.7;
+
+EPSILON_CIRCLE_SIZE = 19;
 
 areas_properties = regionprops(labeled, 'Area', 'Centroid', 'Perimeter');
 
@@ -20,7 +22,9 @@ for i = (1 : labels_no)
     compactness = getcompactness(areas_properties(order(i)));
 
     if (compactness <= CIRCLE_MAX_COMPACTNESS && ...
-        compactness >= CIRCLE_MIN_COMPACTNESS)
+        compactness >= CIRCLE_MIN_COMPACTNESS && ...
+        areas_properties(order(i)).Area >= EPSILON_CIRCLE_SIZE)
+        
         circles_found = circles_found + 1;
         circles_labels(circles_found) = order(i);
 
@@ -32,6 +36,9 @@ for i = (1 : labels_no)
     end
 
 end
+
+circles_labels = circles_labels((1:circles_found),:);
+circlecenters = circlecenters((1:circles_found),:);
 
 imwrite(ismember(labeled, circles_labels), '1.jpg');
 

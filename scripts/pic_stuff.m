@@ -1,20 +1,23 @@
 function [corners] = pic_stuff(nomaze, maze, obstacles)
 
-    diff_pic = removeBackground(maze, nomaze);
+
+    [diff_pic, thresh] = removeBackground(maze, nomaze);
 
     imwrite(diff_pic, 'diff.jpg','jpg');
 
     [height, width] = size(diff_pic);
-    
     
     %imshow(diff_pic)
     
     % find compact areas
     [labeled, labels_no] = bwlabel(diff_pic * (-1) + 1, 8);
     circles = getCircles(labeled, labels_no);
-    [corners, notcorners] = takeFourCorners(circles);
+  
     
-    corners = correctOrientation( corners, notcorners );
+    [corners, notcorners] = takeFourCorners(circles);
+
+    corners = correctOrientation2( corners, notcorners );
+    
 
     projected_pic = remap('diff.jpg', 'jpg', corners);
     

@@ -4,17 +4,17 @@ function [] = driveRobot(robot, nomaze, maze, obstacles)
     corners = pic_stuff(nomaze, maze, obstacles);
 
 
-    [robot_point, obs1, obs2] = findBigSpots(obstacles, maze, corners, 1)
+    [robot_point, obs1, obs2] = findBigSpots(obstacles, maze, corners, 1);
         
     %turn right if turn = -1 and turn left if turn = 1
     [turn, paths] = determinePath(robot_point, obs1, obs2)
 
     if ( paths == 1 )
-        targets = [30 70; 145 70];
+        targets = [35 85; 145 85];
     elseif (paths == 2 )
-        targets = [30 150; 145 150];
+        targets = [35 150; 145 150];
     else
-        targets = [30 220; 145 220];
+        targets = [35 230; 145 230];
     end
 
     if (turn == 1)

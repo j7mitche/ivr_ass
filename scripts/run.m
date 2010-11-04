@@ -1,6 +1,6 @@
 
 global MODE
-MODE = 1; % if 1 then webots, 2 for khepera robot
+MODE = 2; % if 1 then webots, 2 for khepera robot
 
 
 %addpath('~/Downloads/ivr_ass');
@@ -23,10 +23,11 @@ end
 %pause(1); 
 %fprintf(s,'D,0,0');
 
-[nomaze, maze, mazewR] = prepareEnv(MODE);
+[nomaze, maze, mazewR] = prepareEnv(MODE)
+
 
 %driveRobot(s, 'nomaze.jpg','maze.jpg','obstacles.jpg');
-driveRobot(s, nomaze, maze,mazewR);
+driveRobot(s, nomaze, maze, mazewR);
 
 %fclose(s); 
 if (MODE == 1)
